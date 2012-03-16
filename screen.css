@@ -1,0 +1,40 @@
+body {
+  padding-top: 60px;
+}
+
+section {
+  padding-top: 40px;
+}
+
+img{
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+  border:2px solid #021a40;
+}
+
+.hero-unit {
+  margin-bottom:0px;
+}
+
+.teamMember {
+  text-align: center;
+}
+
+.teamMember img{
+  height: 200px;
+}
+
+.example {
+  text-align: center;
+}
+
+.example img {
+  height: 400px;
+}
+
+h1.title {
+  font-size: 90px;
+  line-height: 108px;
+  text-align:center;
+}

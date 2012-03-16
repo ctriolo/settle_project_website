@@ -1,0 +1,225 @@
+!!!
+%head
+  %link{:href=>"bootstrap/css/bootstrap.css", :rel=>"stylesheet"}
+  %link{:href=>"screen.css", :rel=>"stylesheet"}
+
+.navbar.navbar-fixed-top
+  .navbar-inner
+    .container
+      %a.brand{:href=>"333.html"} Settle
+      %ul.nav
+        %li
+          %a{:href=>"#id"} Identification
+        %li
+          %a{:href=>"#overview"} Overview
+        %li
+          %a{:href=>"#functionality"} Functionality
+        %li
+          %a{:href=>"#design"} Design
+        %li
+          %a{:href=>"#milestones"} Milestones
+        %li
+          %a{:href=>"#risks"} Risks and Open Issues
+      %ul.nav.pull-right
+        %li
+          %a{:href=>"project_timeline_document.html"} Project Timeline Document
+
+.container
+  .page-header
+    %h1 Project Overview Document
+
+  %section#id
+    %h2 Identification
+    %h1.title Settle
+    .row
+      .span4.teamMember
+        %img{:src=>"images/dave.png"}
+        %address.caption
+          %strong Dave Capra <br/>
+          %a{:href=>"mailto:dcapra@princeton.edu"} dcapra@princeton.edu <br/>
+          Computer Science '12
+      .span4.teamMember
+        %img{:src=>"images/rafi.png"}
+        %address.caption
+          %strong Rafi Romero <br/>
+          %a{:href=>"mailto:rgromero@princeton.edu"} rgromero@princeton.edu <br/>
+          Computer Science '12
+      .span4.teamMember
+        %img{:src=>"images/chris.png"}
+        %address.caption
+          %strong Christopher Triolo <br/>
+          %a{:href=>"mailto:ctriolo@princeton.edu"} ctriolo@princeton.edu <br/>
+          Computer Science '12 <br/>
+          %strong Leader
+
+  %section#overview
+    %h2 Overview
+    %p We love the incredibly popular board game "The Settlers of Catan" but feel that an online version would fix a lot of the things that prevent people from playing -- board set-up time, length of full games and inability to find other players. We aim to develop a streamlined, Facebook-connected edition of the board game that instantly takes care of set up, banking, and game creation, while updating rules to make the game more open, fun, and fast. The application is meant for Catan enthusiasts and amateurs, and will record leaderboards and past game history.
+    %p Catan has become so popular due to the cut-throat and competitive environment which has players trading with each other and discussing deals. There for a major part of our application will involve allowing communication, both through asynchronous text messages and video chat if users enable it. We will also allow for password-protected private games so even a group of people in the same room can enjoy an online version that takes care of set-up for them and speeds up gameplay.
+    %p We intend to use Node.js, jQuery, and MongoDB to set up a robust and efficient server that can maintain each game state and instant interactivity. We will also plan on using SVG graphics and OpenTok for video chatting.
+
+  %section#functionality
+    %h2 Functionality
+    %p  There are a few desktop applications and video games that allow for digital Catan, but have extremely obtuse and confusing application flows and graphics, so functionality clarity is very important to us. Catan is already a game with many rules -- some confusing -- so why should the page structure be? There aren't too many different use-case scenarios, but the main ones are "Player wants to join game" "Player wants to create game" "Player wants to examine statistics and leaderboards"
+    %p  For "Player wants to join game," users will first be taken to the game selection screen which will show a list of all public and private games available. If public, the user will be able to see the names of the people playing -- it's also possible that public games will be sorted based on closeness of the current players to that user so that they would see a game with their facebook friends in it first. If a player clicks on a private game they will be prompted to enter in the password before they can enter. For "Player wants to create game" On this front page will also be a "Create Game" button which will bring up a pop-up allowing that user to customize game experience by allowing for private games with a password, filtering the types of games in the list based on board type and various customizable rules such as "Friendly Robber." Game creating players will also have the option to start the game with 3 people and allow an AI to take control of the fourth spot. For "Player wants to examine statistics and leaderboards," The front page will also have "Leaderboard" and "View History" buttons that show a detailed breakdown of the user's past history as well as the leaderboards for all users and all friends.
+    %p  After selecting and entering into a game, they will be taken to the board which will have the hexagon structure of the game as well as web-cam feeds from each player. We have an initial mock-up of the hexagon structure using SVG graphics:
+    %div.example
+      %img{:src=>"images/example.png"}
+    %p  Should a player disable their web-cam, their Facebook profile picture will appear. The user will always see themselves in the bottom left corner along with an area for their cards to be placed, and a text box in order to chat with other players. Various statistics will be displayed under each opponent including Victory Points, Number of Cards, Size of Army and Length of Longest Road.
+    %p  Another difficult problem is trading. Players are allowed to trade any amount of cards for any amount of others. Most versions only allow player-to-player trades instead of multiplayer trades. We hope to develop a system that makes it easy to post what you're willing to give (through a popup), allowing other players to accept trades (by clicking a green check mark on the popup), and third parties to be able to get in on the deal too.
+    %p  On the leaderboard screen, users will be able to view the global leaders as well as the leaders amongst their Facebook friends. They will also be able to post updates to their newsfeed and challenge friends from that screen as well as the game creation screen.
+
+  %section#design
+    %h2 Design
+    %h3 Technology
+    .row
+      .span4
+        %h4 Node.js
+        %p  Node.js is an event based, non-blocking,  server. It is especially useful for applications that need to be scalable and operate in real time. Every action the occurs on the clients browser will be sent to the server for validation and processing. The server will then return the game state to the game's participants browsers and the board will be redrawn from the new data.
+      .span4
+        %h4 Socket.IO
+        %p  Socket.IO allows for very easy sending and receiving of messages between both clients and servers. This will allow a game participant's browser to send messages to the server, have the server process the information and then send back the relevant messages back to the game participants browsers.
+      .span4
+        %h4 Express
+        %p  Express is a framework for node.js servers. It allows for easy routing and templating. While the "in-game" part of our project will not make much use of express, it will allow us to easily generate the log-in flow, join game flow, create game flow, high score charts and the like.
+    .row
+      .span4
+        %h4 MongoDB
+        %p  MongoDB is a document based, schemaless, key-value datastore. Data is stored in a JSON like format within the database called BSON. We will be using the node-mongodb-native driver to allow our node.js server to speak to our MongoDB instance. The information that will be stored there will be user data (such as who they are, wins/loses, and facebook id). And past game data. Depending on on our testing we may decide to store game data of games currently being run but will opt not to if it doesn't seem to be essential.
+      .span4
+        %h4 Scalable Vector Graphics
+        %p  SVG will be the graphic framework we will use to display and interact with the game board. It will be controlled and interacted with completely by javascript so it will easily be able to respond to socket.io messages that are received from the server.
+      .span4
+        %h4 Facebook Connect API
+        %p  The Facebook connect api will give us an easy way for users to login. Once logged in Facebook gives us the user id of the logged in user and access to that user's name, profile picture, and friend list. We then use this information in the gui's of our game and game lists. We will also be able to let users know when their friends are playing or waiting for others to join their game. The API can be accessed completely by javascript.
+    .row
+      .span4
+        %h4 OpenTok
+        %p  OpenTok has an API which allows for easy multi-person video chat through a simple javascript call. This tech can be easily implemented into our game board design, probably having each player in each other four corners of the user's window.
+      .span4
+        %h4 jQuery
+        %p  Javascript library that will allow us for easy managing of the clients view (the board game).
+    %h3 Components
+    %h4 Model
+    .row
+      .span4
+        %strong User
+        %ul
+          %li id (== facebook user id)
+          %li name (== facebook user name)
+          %li pictureURL (== facebook profile pic)
+          %li friends (facebook friends on our application)
+          %li currentGame
+          %li pastGames
+          %li wins
+          %li loses
+      .span4
+        %strong Player (inherits User)
+        %ul
+          %li tokensLeft
+          %li visibleVictoryPoints
+          %li hiddenVictoryPoints
+          %li roadLength
+          %li armySize
+          %li resourceCards
+          %li developmentCards
+      .span4
+        %strong Tiles
+        %ul
+          %li index
+          %li token (robber)
+          %li resourceType
+          %li resourceNumber
+          %li adjVertices
+          %li adjEdges
+    .row
+      .span4
+        %strong Edge
+        %ul
+          %li index
+          %li token (road, color?)
+          %li adjVertices
+          %li adjTiles
+      .span4
+        %strong Vertex
+        %ul
+          %li index
+          %li token (city, settlement, color?)
+          %li adjTiles
+          %li adjEdges
+      .span4
+        %strong Game
+        %ul
+          %li id
+          %li tiles
+          %li edges
+          %li vertices
+          %li gameState
+          %li gameStateForUser
+          %li players
+          %li spectators
+          %li startGame
+          %li whoseTurn
+          %li buildRoad
+          %li buildSettlement
+          %li buildCity
+          %li buildDevelopmentCard
+          %li offerPlayerTrade
+          %li acceptPlayerTrade
+          %li acceptPortTrade
+    .row
+      .span6
+        %h4 View
+        %p  For the view we are aiming to have as little game logic as possible on the client size. The view will be reponsible for redrawing the game board when the client receives the game state from the server and displying system messages. The view will also be almost completely responsible for the OpenTok video chat functionality. Using jQuery, SVG, and Socket.IO, the view will be responsible for catching user actions and sending messages to the server.
+      .span6
+        %h4 Controller
+        %p  The controller logic will be responsible for interpreting client messages to the server and calling the correct functions on the models, and relaying back the data to the the clients. This means the controller needs a way to distinguish between all the active games and players.
+
+  %section#milestones
+    %h2 Milestones
+    %p  For the main development phase of our app, we decided to phrase them in terms of "User Stories". These are goals, phrased as quotes, that a user should be say and be 100% true, or not true (as in the Project Overview Document assignment description). These have a [user_story] bracket tag prefacing them. All of these are written in terms of game aspects.
+    %p  Thus, without further ado, our milestones (by week):
+    %ul
+      %li
+        %strong March 12
+        %p Complete and submit Project Overview Document
+      %li
+        %strong March 19
+        %p [user_story] "I will be able to visit www.cs.princeton.edu/~ctriolo, join a game, and see a shared set-up board that is stored on the server."
+      %li
+        %strong March 26
+        %p [user_story] "I will be able to place my starting settlements and receive my starting resources"
+        %p [user_story] "I will be able to take turns. On a turn I will be able to roll the two dice, and either receive resources or move the knight to a new location and steal a random resource from an opponent"
+      %li
+        %strong April 2
+        %p [user_story] "I will be able to make purchases with my resources (roads, settlements, cities, and development cards)."
+        %p [user_story] "I will be able to place my purchased roads, settlements, and cities. I will be able to gain longest road."
+      %li
+        %strong April 9
+        %p [user_story] "I will be able to play development cards. I will also be able to gain largest army."
+        %p [user_story] "I will be able to trade with other players"
+        %p With all of the above complete, the following will automatically be true: "I will be able to play a full game of Settlers of Catan."
+      %li
+        %strong April 16
+        %p [user_story] "I will be able to visit www.<domain-name-TBD>.com, log in with my Facebook Account, and join any game, as well as play any number of games. My stats will persist on the site."
+        %p Furthermore, we will be able to host multiple games simultaneously.
+      %li
+        %strong April 23
+        %p Alpha Test
+      %li
+        %strong April 30
+        %p Beta Test
+      %li
+        %strong May 7
+        %p Demo
+      %li
+        %strong May 14
+        %p Submit Final Project (Code + Report)
+    %p As you can see, we have a detailed early semester, and the last four weeks are left deliberately vague and open. This is to give us a backup plan for our optimistic milestones, and also because these weeks are too far in the future to determine what we will need by then. If all goes to plan, we will finish on the week of April 16. Because this will likely not happen, we have given ourselves 4 weeks of comfort room.
+    %p Finally, our back end stuff will follow naturally from the user stories. Thus, each week we will assess what is needed to complete the week's user story, and that will determine our back end goals. (e.g. If we need server space, we will obtain server space.)
+
+  %section#risks
+    %h2 Risks and Open Issues
+    %p We have a few risks and open issues that we are aware of at this time. For starters, we need to have clean interfaces and implementations. Specificvally, we need to figure out a clear, natural, and understandable way of storing all the data of a game state inside a JSON object. Given that the board is a hexagonal grid with faces, edges, and vertices all playing important roles, this is a non-trivial task. Furthermore, we need to create a clean user interface that takes these complexities and presents them to the user in an intuitive way. The world's best implementation with a poor user interface is a lost product.
+    %p After a (hopefully) good representation and UI design, the next issue is implementing the intricacies of the game. Turns can get quite complicated, especially with the ability to trade. Thus we will need to design trading protocols and implement them, which may require intensive client-server communication. In the worst case, if we decide that the complexities of trading are just too difficult to implement, we will use the OpenTok video chat to permit the negotiation of trades whereas the final trade will be submitted by the players (without negotiation).
+    %p Finally, on a more long-term and general scale, we need to worry about copyright infringement. This is a copyrighted game that does not belong to us. This is not so much a concern for the class as much as a post-class release issue. Our hope is to take an approach similar to that of Zynga's Words with Friends—that is, to alter the rules in such a way so as to make the game "different enough" to not be a copyright violation. In the worst case, we will simply not release our game and this idea will end on Dean's Date ;( .
